@@ -19,17 +19,21 @@ def chat_completion_request(messages, tools=None, tool_choice=None, model=GPT_MO
         print(f"Exception: {e}")
         return e
 
-# openai.api_key = open('./key.txt', 'r').read().strip('\n')
+openai.api_key = open('./key.txt', 'r').read().strip('\n')
 
 client = openai.OpenAI(api_key=open('./key.txt', 'r').read().strip('\n'))
 
 messages = []
-messages.append({"role": "system", "content": "Don't make assumptions about what values to plug into functions. Ask for clarification if a user request is ambiguous."})
-messages.append({"role": "user", "content": "What's the weather like today"})
-chat_response = chat_completion_request(
-    messages
-)
-# print(chat_response)
-assistant_message = chat_response.choices[0].message
-messages.append(assistant_message)
-print(assistant_message)
+
+user_input = input("~> ")
+messages.append({"role": "user", "content": user_input})
+
+while user_input != "exit":
+    chat_response = chat_completion_request(
+        messages
+    )
+    assistant_message = chat_response.choices[0].message
+    messages.append({"role": "assistant", "content": assistant_message})
+    print(assistant_message)
+    user_input = input("~> ")
+    messages.append({"role": "user", "content": user_input})
