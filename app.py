@@ -150,7 +150,7 @@ with gr.Blocks() as demo:
             if question_interface == "No questions available" or len(messages) <= 3:
                 return "Please refresh the questions and answer them first"
 
-            messages.append({"role": "user", "content": 'Analyze my previous answers for me.'})
+            messages.append({"role": "user", "content": 'Analyze my previous answers and results of this survey.'})
             chat_response = chat_completion_request(
                 messages
             )
